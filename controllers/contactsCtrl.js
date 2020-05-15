@@ -1,4 +1,5 @@
 const Contact = require('../models/Contact');
+const { sendServerError } = require('../utils');
 
 exports.getAllContacts = async (req, res) => {
   try {
@@ -89,9 +90,4 @@ exports.deleteContact = async (req, res) => {
   } catch (err) {
     sendServerError(res, err);
   }
-};
-
-const sendServerError = (res, err) => {
-  console.error(err.message);
-  res.status(500).json({ msg: 'Server Error!' });
 };

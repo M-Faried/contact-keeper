@@ -1,6 +1,7 @@
 const express = require('express');
 const authentication = require('../middleware/authentication');
-const { check, validationResult } = require('express-validator');
+const { check } = require('express-validator');
+const { checkValidationErrors, isValidMongoID } = require('../utils');
 const controller = require('../controllers/contactsCtrl');
 
 // Creating the router object.
@@ -21,12 +22,8 @@ const checkPost = [
   check('email', 'Email is required').isEmail(),
 ];
 router.post('/', [authentication, checkPost], (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
-  } else {
-    controller.addContact(req, res);
-  }
+  if (checkValidationErrors(req, res)) return;
+  controller.addContact(req, res);
 });
 
 // @route   PUT api/contacts/:id
@@ -34,10 +31,8 @@ router.post('/', [authentication, checkPost], (req, res) => {
 // @access  Private
 const checkPut = [check('email', 'Invalid Email Format').optional().isEmail()];
 router.put('/:id', [authentication, checkPut], (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
-  } else if (!isValidID(req.params.id)) {
+  if (checkValidationErrors(req, res)) return;
+  if (!isValidMongoID(req.params.id)) {
     res.status(400).json({ msg: 'Invalid ID Format!' });
   } else {
     controller.updateContact(req, res);
@@ -48,14 +43,11 @@ router.put('/:id', [authentication, checkPut], (req, res) => {
 // @des     Delete a contact
 // @access  Private
 router.delete('/:id', authentication, (req, res) => {
-  if (!isValidID(req.params.id)) {
+  if (!isValidMongoID(req.params.id)) {
     res.status(400).json({ msg: 'Invalid ID Format!' });
   } else {
     controller.deleteContact(req, res);
   }
 });
-
-// Validating the format of the id as mongoose will throw an exception if the format wasn't valid and this will report a server error while it is a clinet error.
-const isValidID = (id) => id.match(/^[0-9a-fA-F]{24}$/);
 
 module.exports = router;
