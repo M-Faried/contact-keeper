@@ -33,7 +33,7 @@ exports.addContact = async (req, res) => {
 exports.updateContact = async (req, res) => {
   try {
     //Retrieving the contact for the param ID
-    const contact = await Contact.findById(req.params.id);
+    let contact = await Contact.findById(req.params.id);
     if (!contact) {
       res.status(404).json({ msg: 'Contact Not Found!' });
       return;
@@ -54,14 +54,14 @@ exports.updateContact = async (req, res) => {
     if (type) contactFields.type = type;
 
     // Updating the contact entry in the database.
-    await Contact.findByIdAndUpdate(
+    contact = await Contact.findByIdAndUpdate(
       req.params.id,
       { $set: contactFields },
-      { new: false }
+      { new: true }
     );
 
     //Returning the result.
-    res.json({ msg: 'Contat Updated.' });
+    res.json(contact);
   } catch (err) {
     sendServerError(res, err);
   }
@@ -86,7 +86,7 @@ exports.deleteContact = async (req, res) => {
 
     // Deleting the contact
     await contact.remove();
-    res.json({ msg: 'Contact Deleted.' });
+    res.json(contact);
   } catch (err) {
     sendServerError(res, err);
   }

@@ -15,7 +15,7 @@ const Login = (props) => {
   );
 
   useEffect(() => {
-    //Directing the user to the home page ijf he is authenticated.
+    //Directing the user to the home page if he is authenticated.
     if (isAuthenticated) {
       props.history.push('/');
     }

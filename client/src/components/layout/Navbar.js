@@ -1,10 +1,17 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { UserContext } from '../../context/UserContext';
 
 const Navbar = ({ title, icon }) => {
-  const { isAuthenticated, user, logout } = useContext(UserContext);
+  const { isAuthenticated, user, loadUser, logout } = useContext(UserContext);
+
+  useEffect(() => {
+    if (localStorage.token) {
+      loadUser();
+    }
+    //eslint-disable-next-line
+  }, []);
 
   const onLogout = () => logout();
 
@@ -30,21 +37,19 @@ const Navbar = ({ title, icon }) => {
         <Link to='/register'>Register</Link>
       </li>
       <li>
-        <Link to='/login'>Login</Link>
+        <Link to='/'>Login</Link>
       </li>
     </Fragment>
   );
+
   return (
     <div className='navbar bg-primary'>
       <h1>
-        <i className={icon} /> {title}
+        <Link to='/about'>
+          <i className={icon} /> {title}
+        </Link>
       </h1>
-      <ul>
-        {isAuthenticated ? authLinks : guestLinks}
-        <li>
-          <Link to='/about'>About</Link>
-        </li>
-      </ul>
+      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
     </div>
   );
 };

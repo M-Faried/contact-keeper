@@ -30,6 +30,8 @@ const ContactForm = () => {
     }
   }, [selectedContact]);
 
+  const clearAll = () => clearSelectedContact();
+
   const onChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
   };
@@ -37,17 +39,14 @@ const ContactForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (name && email) {
-      if (selectedContact) {
-        updateContact(contact);
-        clearSelectedContact();
-      } else {
+      if (selectedContact === null) {
         addContact(contact);
-        setContact(emptyContact);
+      } else {
+        updateContact(contact);
       }
+      clearAll();
     }
   };
-
-  const clearAll = () => clearSelectedContact();
 
   return (
     <form onSubmit={onSubmit}>
@@ -60,6 +59,7 @@ const ContactForm = () => {
         name='name'
         value={name}
         onChange={onChange}
+        autoComplete='false'
       />
       <input
         type='email'
@@ -67,6 +67,7 @@ const ContactForm = () => {
         name='email'
         value={email}
         onChange={onChange}
+        autoComplete='false'
       />
       <input
         type='text'
@@ -74,6 +75,7 @@ const ContactForm = () => {
         name='phone'
         value={phone}
         onChange={onChange}
+        autoComplete='false'
       />
       <h5>Contact Type</h5>
       <input
