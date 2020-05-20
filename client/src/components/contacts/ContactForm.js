@@ -30,7 +30,12 @@ const ContactForm = () => {
     }
   }, [selectedContact]);
 
-  const clearAll = () => clearSelectedContact();
+  const clearAll = () => {
+    clearSelectedContact();
+    //The following is required to clear fields after add because add doesn't change
+    //selectedContact so useEffect will not be triggered in this case
+    setContact(emptyContact);
+  };
 
   const onChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });

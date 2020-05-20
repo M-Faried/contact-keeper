@@ -15,6 +15,7 @@ export const ContactContextProvider = (props) => {
     filteredContacts: null,
     selectedContact: null,
     error: null,
+
     isLoading: false,
   });
 
@@ -46,7 +47,7 @@ export const ContactContextProvider = (props) => {
       setState((ps) => ({
         ...ps,
         isLoading: false,
-        contacts: [res.data, ...state.contacts],
+        contacts: [res.data, ...ps.contacts],
       }));
     } catch (err) {
       setState((ps) => ({
@@ -142,7 +143,7 @@ export const ContactContextProvider = (props) => {
   );
 };
 
-// const testCotnacts = [
+// let testCotnacts = [
 //   {
 //     _id: 1,
 //     name: 'Jill Johnson',

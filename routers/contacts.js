@@ -17,11 +17,11 @@ router.get('/', authentication, (req, res) => {
 // @route   POST api/contacts
 // @des     Add a contact
 // @access  Private
-const checkPost = [
+const addContactValidations = [
   check('name', 'Name is required').not().isEmpty(),
   check('email', 'Email is required').isEmail(),
 ];
-router.post('/', [authentication, checkPost], (req, res) => {
+router.post('/', [authentication, addContactValidations], (req, res) => {
   if (checkValidationErrors(req, res)) return;
   controller.addContact(req, res);
 });
@@ -29,8 +29,10 @@ router.post('/', [authentication, checkPost], (req, res) => {
 // @route   PUT api/contacts/:id
 // @des     Update a contact
 // @access  Private
-const checkPut = [check('email', 'Invalid Email Format').optional().isEmail()];
-router.put('/:id', [authentication, checkPut], (req, res) => {
+const updateContactValidations = [
+  check('email', 'Invalid Email Format').optional().isEmail(),
+];
+router.put('/:id', [authentication, updateContactValidations], (req, res) => {
   if (checkValidationErrors(req, res)) return;
   if (!isValidMongoID(req.params.id)) {
     res.status(400).json({ msg: 'Invalid ID Format!' });

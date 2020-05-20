@@ -10,7 +10,7 @@ const router = express.Router();
 // @route   POST api/user/register
 // @des     Register a new user.
 // @access  Public
-const checkRegisterData = [
+const registerValidations = [
   check('name', 'Name is required').not().isEmpty(),
   check('email', 'A valid email is required').isEmail(),
   check(
@@ -18,7 +18,7 @@ const checkRegisterData = [
     'Please enter a password with 6 or more characters'
   ).isLength({ min: 6 }),
 ];
-router.post('/register', checkRegisterData, (req, res) => {
+router.post('/register', registerValidations, (req, res) => {
   if (checkValidationErrors(req, res)) return;
   controller.register(req, res);
 });
@@ -26,11 +26,11 @@ router.post('/register', checkRegisterData, (req, res) => {
 // @route   POST api/user/login
 // @des     Authenticate user & get token.
 // @access  Public
-const checkLoginData = [
+const loginValidations = [
   check('email', 'Email is required').isEmail(),
   check('password', 'Password is required').exists(),
 ];
-router.post('/login', checkLoginData, (req, res) => {
+router.post('/login', loginValidations, (req, res) => {
   if (checkValidationErrors(req, res)) return;
   controller.login(req, res);
 });
