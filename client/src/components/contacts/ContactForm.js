@@ -30,10 +30,13 @@ const ContactForm = () => {
     }
   }, [selectedContact]);
 
+  //Clearing all the fields and the selectedContact if there was any.
   const clearAll = () => {
     clearSelectedContact();
+
     //The following is required to clear fields after add because add doesn't change
-    //selectedContact so useEffect will not be triggered in this case
+    //selectedContact, so useEffect will not be triggered in this case. So we need
+    //to clear the login form by clearing the state.
     setContact(emptyContact);
   };
 

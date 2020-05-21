@@ -32,6 +32,7 @@ const Login = (props) => {
   const { email, password } = user;
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!(email && password)) {

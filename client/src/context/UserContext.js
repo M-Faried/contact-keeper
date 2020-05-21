@@ -16,8 +16,13 @@ export const UserContextProvider = (props) => {
 
   //Helper: Wipes the
   const authReset = (err) => {
+    //Removing the tokenf rom the local storage.
     localStorage.removeItem('token');
+
+    //Removing the token from axios global configurations.
     setAuthToken(null);
+
+    //Restting the state.
     setState({
       ...state,
       token: null,
