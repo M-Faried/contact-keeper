@@ -7,7 +7,13 @@ const About = () => {
       <p className='my-1'>
         This is a full stack REACT app for keeping contacts.
       </p>
-      <p className='bg-dark'>
+      <p>
+        <a href='mailto:m.faried.11111@gmail.com' target='_blank'>
+          Contact Developer: m.faried.11111@gmail.com
+        </a>
+      </p>
+      <br />
+      <p>
         <strong>Version:</strong> 1.0.0
       </p>
     </div>

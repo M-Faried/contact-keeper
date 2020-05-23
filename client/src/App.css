@@ -2,11 +2,13 @@
 
 /* Global Styles */
 :root {
-  --primary-color: #003699;
+  --primary-color: #2196f3;
   --dark-color: #333333;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
+
+  --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 * {
@@ -97,8 +99,9 @@ img {
 /* Cards */
 .card {
   padding: 1rem;
-  border: #ccc 1px dotted;
-  margin: 0.7rem 0;
+  /* border: #ccc 1px dotted; */
+  margin: 2rem 0;
+  box-shadow: var(--box-shadow);
 }
 
 /* List */
@@ -346,7 +349,9 @@ button {
   max-width: 500px;
   margin: 2rem auto;
   overflow: hidden;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
 }
 
 .form-container h1,
