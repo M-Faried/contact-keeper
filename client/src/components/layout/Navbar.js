@@ -19,7 +19,8 @@ const Navbar = ({ title, icon }) => {
     <Fragment>
       <li>
         <Link to='/'>
-          <i className='fa fa-user'></i> {user && user.name}
+          <i className='fa fa-user'></i>
+          {user && <span className='hide-sm'>{user.name}</span>}
         </Link>
       </li>
       <li>

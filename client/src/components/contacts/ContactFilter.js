@@ -22,7 +22,7 @@ const ContactFilter = () => {
 
   const onSubmit = (e) => e.preventDefault();
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className='search-form'>
       <input
         ref={text}
         type='text'
