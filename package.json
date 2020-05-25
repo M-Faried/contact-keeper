@@ -7,11 +7,10 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
-    "client-build": "npm run build --prefix client",
     "client-install": "npm install --prefix client",
+    "client-build": "npm run build --prefix client",
     "debug": "concurrently \"npm run server\" \"npm run client\"",
-    "predeploy": "npm run client-build",
-    "deploy": "gh-pages -d build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
