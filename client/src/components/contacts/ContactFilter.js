@@ -6,12 +6,6 @@ const ContactFilter = () => {
   const { setFilter, clearFilter } = useContext(ContactContext);
   const text = useRef('');
 
-  //   useEffect(() => {
-  //     if (filteredContacts === null) {
-  //       text.current.value = '';
-  //     }
-  //   }, []);
-
   const onChange = (e) => {
     if (text.current.value !== '') {
       setFilter(e.target.value);

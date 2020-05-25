@@ -73,6 +73,12 @@ export const ContactContextProvider = (props) => {
         contacts: state.contacts.map((ct) =>
           ct._id === res.data._id ? res.data : ct
         ),
+        filteredContacts:
+          state.filteredContacts === null
+            ? null
+            : state.filteredContacts.map((ct) =>
+                ct._id === res.data._id ? res.data : ct
+              ),
       }));
     } catch (err) {
       setState((ps) => ({
