@@ -12,10 +12,10 @@ export const ContactContext = createContext();
 export const ContactContextProvider = (props) => {
   const [state, setState] = useState({
     contacts: [],
-    filteredContacts: null,
     selectedContact: null,
+    filterText: null,
+    filteredContacts: null,
     error: null,
-
     isLoading: false,
   });
 
@@ -49,6 +49,9 @@ export const ContactContextProvider = (props) => {
         isLoading: false,
         contacts: [res.data, ...ps.contacts],
       }));
+
+      //Re-applying the filter again to include the latest updates.
+      if (state.filterText) setFilter(state.filterText);
     } catch (err) {
       setState((ps) => ({
         ...ps,
@@ -70,13 +73,13 @@ export const ContactContextProvider = (props) => {
       setState((ps) => ({
         ...ps,
         isLoading: false,
-        contacts: state.contacts.map((ct) =>
+        contacts: ps.contacts.map((ct) =>
           ct._id === res.data._id ? res.data : ct
         ),
         filteredContacts:
-          state.filteredContacts === null
+          ps.filteredContacts === null
             ? null
-            : state.filteredContacts.map((ct) =>
+            : ps.filteredContacts.map((ct) =>
                 ct._id === res.data._id ? res.data : ct
               ),
       }));
@@ -97,7 +100,11 @@ export const ContactContextProvider = (props) => {
       setState((ps) => ({
         ...ps,
         isLoading: false,
-        contacts: state.contacts.filter((ct) => ct._id !== id),
+        contacts: ps.contacts.filter((ct) => ct._id !== id),
+        filteredContacts:
+          ps.filteredContacts === null
+            ? null
+            : ps.filteredContacts.filter((ct) => ct._id !== id),
       }));
     } catch (err) {
       setState((ps) => ({ ...ps, isLoading: false, error: err.response.msg }));
@@ -119,7 +126,8 @@ export const ContactContextProvider = (props) => {
     const regex = new RegExp(text, 'gi');
     setState((ps) => ({
       ...ps,
-      filteredContacts: state.contacts.filter((ct) => {
+      filterText: text,
+      filteredContacts: ps.contacts.filter((ct) => {
         return ct.name.match(regex) || ct.email.match(regex);
       }),
     }));
@@ -127,7 +135,7 @@ export const ContactContextProvider = (props) => {
 
   //Clear Filter
   const clearFilter = () => {
-    setState((ps) => ({ ...ps, filteredContacts: null }));
+    setState((ps) => ({ ...ps, filterText: null, filteredContacts: null }));
   };
 
   const services = {
