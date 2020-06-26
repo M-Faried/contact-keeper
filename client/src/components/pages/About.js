@@ -8,8 +8,9 @@ const About = () => {
         This is a full stack REACT app for keeping contacts.
       </p>
       <p>
-        <a href='mailto:m.faried.11111@gmail.com'>
-          Contact Developer: m.faried.11111@gmail.com
+        Developer's Portfolio & Contacts:{' '}
+        <a href='https://m-faried.github.io/m-faried-portfolio/' target='blank'>
+          https://m-faried.github.io/m-faried-portfolio/
         </a>
       </p>
       <br />
